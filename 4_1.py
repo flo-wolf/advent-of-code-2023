@@ -20,13 +20,11 @@ file = open('4_input.txt', 'r')
 lines = file.readlines()
 
 total_points = 0
-card_count = 0
 for line in lines:
     for match in re.findall(r': *(\d+(?:  ?\d+)*) \| *(\d+(?:  ?\d+)*)', line):
         winning_numbers = list(map(int, match[0].split()))
         guesses = list(map(int, match[1].split()))
         card = Card(winning_numbers, guesses)
-        card_count += 1
         total_points += card.get_points()
 
 print(total_points)
