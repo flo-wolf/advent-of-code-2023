@@ -64,7 +64,6 @@ gear_ratio_sum = 0
 for gears in gears_by_line.values():
     for gear in gears:
         if len(gear.adjacent_numbers) == 2:
-            adj_num = [num.value for num in gear.adjacent_numbers]
             gear_ratio = gear.adjacent_numbers.pop().value * gear.adjacent_numbers.pop().value
             gear_ratio_sum += gear_ratio
 
