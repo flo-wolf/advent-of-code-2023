@@ -5,12 +5,28 @@ class Card:
         self.winning_numbers = winning_numbers
         self.guesses = guesses
 
-    def get_points() -> int:
-        return 0
+    def get_points(self) -> int:
+        points = 0
+        for guess in self.guesses:
+            for winning_number in self.winning_numbers:
+                if guess == winning_number:
+                    if points == 0:
+                        points = 1
+                    else:
+                        points = points * 2
+        return points
 
 file = open('4_input.txt', 'r')
 lines = file.readlines()
 
+total_points = 0
+card_count = 0
 for line in lines:
-    for match in re.finditer(r'(?:^|\|)\s*([0-9\s]+)\s*\|\s*([0-9\s]+)\s*(?:$|\|)', line, re.IGNORECASE):
-        matched_winning_numbers, matched_guesses = match.groups()
+    for match in re.findall(r': *(\d+(?:  ?\d+)*) \| *(\d+(?:  ?\d+)*)', line):
+        winning_numbers = list(map(int, match[0].split()))
+        guesses = list(map(int, match[1].split()))
+        card = Card(winning_numbers, guesses)
+        card_count += 1
+        total_points += card.get_points()
+
+print(total_points)
